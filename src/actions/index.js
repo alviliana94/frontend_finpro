@@ -1,10 +1,11 @@
-import axios from "../config/axios";
+import axios from "../config/axios"; // untuk API
 import cookies from "universal-cookie";
+import swal from 'sweetalert';
 
 const cookie = new cookies();
 
-export const onLoginClick = (username, password) => {
-  return async dispatch => {
+export const login = (username, password) => {
+  return async dispatch => { // 
     await axios
       .post("/users/login", {
         username,
@@ -12,6 +13,8 @@ export const onLoginClick = (username, password) => {
       })
       .then(
         res => {
+          console.log(res.data);
+          
           cookie.set("idLogin", res.data.id, { path: "/" });
           cookie.set("stillLogin", res.data.username, { path: "/" });
           cookie.set("role", res.data.role, { path: "/" });
@@ -27,10 +30,11 @@ export const onLoginClick = (username, password) => {
         },
         err => {
           console.log(err);
-          dispatch({
-            type: "AUTH_ERROR",
-            payload: "Username or Password incorrect"
-          });
+          swal({
+            title:"Login Failed",
+            text:"Username or Password incorrect",
+            icon:"error"
+          })
         }
       );
   };
@@ -68,29 +72,38 @@ export const onLoginAdmin = (username, password) => {
   };
 };
 
-export const onRegister = (firstname,lastname,username,email,password,birthday,address,kodepos) => {
+export const register = (firstname,lastname,username,email,password,birthday,address,kodepos) => {
   return dispatch => {
     if (firstname === "" || lastname === "" || username === "" || password === "" || email === "") {
-      dispatch({
-        type: "AUTH_EMPTY",
-        payload: "* this form cannot be empty"
-      });
+      return (
+        swal({
+          title:"Warning",
+          text:"Field Cannot be empty!",
+          icon:"warning"
+        })
+      )
     }else{
       axios.post("/user/register", {
         firstname,lastname,username,email,password,birthday,address,kodepos
         })
         .then(res => {
           console.log("Register Success");
-          dispatch({
-            type: "REGISTER_SUCCESS",
-            payload: `Register Success, please check your email to activate your account!`
-          });
+          return(
+            swal({
+              title:"Register Succes",
+              text:"Your account has been successfully registered, please check your email to activate your account",
+              icon:"success"
+            })
+          )
         },err => {
           console.log(err);
-            dispatch({
-              type: "AUTH_ERROR",
-              payload:"REgister Failed"
-            });
+          return(
+            swal({
+              title:"Register Failed",
+              text:"",
+              icon:"error"
+            })
+          )
       })
     }
   };

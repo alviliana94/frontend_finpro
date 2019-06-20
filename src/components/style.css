@@ -81,3 +81,20 @@ body {
 .bm-overlay {
   background: rgba(0, 0, 0, 0.3);
 }
+
+.card-header {
+  background : white !important;
+}
+
+.card-header p .text1 {
+  color : black;
+  font-size: xx-large;
+}
+
+.card-header .transport-card {
+  border-color : black !important;
+}
+
+.card-body {
+  background-color: rgba(214, 214, 214, 0.3) !important;
+}

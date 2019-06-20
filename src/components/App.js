@@ -14,7 +14,11 @@ import ManageAuthorPublisher from './admin/ManageAuthorPublisher'
 import ManageHomeImage from './admin/ManageHomeImage'
 import LoginAdmin from './admin/LoginAdmin';
 import DashboardAdmin from './admin/DashboardAdmin';
+import Register from './user/Register'
+import Login from './user/Login'
+import Profile from './user/Profile'
 const cookie = new cookies()
+
 
 
 class App extends Component {
@@ -45,6 +49,9 @@ class App extends Component {
                 <Route path="/managehomeimage" component={ManageHomeImage}/>
                 <Route path="/admin/login" component={LoginAdmin}/>
                 <Route path="/admin/dashboard" component={DashboardAdmin}/>
+                <Route path="/register" component={Register}/>
+                <Route path="/login" component={Login}/>
+                <Route path="/profile" component={Profile} />
             </div>
         </BrowserRouter>
             

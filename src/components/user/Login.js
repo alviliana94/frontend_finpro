@@ -3,37 +3,18 @@ import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import cookies from "universal-cookie";
 
-import {onLoginClick} from '../../actions'
-import {afterTwoSeconds} from '../../actions'
+import {login} from '../../actions'
 
 const cookie = new cookies();
 
 
 class Login extends Component {
-  onSubmitClick = () => {
+  onLogin = () => {
     const user = this.username.value;
     const pass = this.password.value;
-    this.props.onLoginClick(user, pass);
+    this.props.login(user, pass);
   };
-  onErrorLogin = () => {
-    if (this.props.error !== "") {
-      return (
-        <div>
-          <div className="alert alert-danger mt-4 text-center">
-            {this.props.error}
-          </div>
-        </div>
-      );
-    } else if (this.props.empty !== "") {
-      return (
-        <div className="alert alert-danger mt-4 text-center">
-          {this.props.empty}
-        </div>
-      );
-    } else {
-        return null;
-    }
-  };
+  
   
   render() {
     const {role} = this.props.user
@@ -47,7 +28,7 @@ class Login extends Component {
                     <h1>Login</h1>
                   </div>
                   <div className="card-title mt-1">
-                    <h4>Username</h4>
+                    <h4>Username or Email</h4>
                   </div>
                   <form className="input-group">
                     <input
@@ -72,13 +53,10 @@ class Login extends Component {
                   </form>
                   <button
                     className="btn btn-success btn-block mt-5"
-                    onClick={this.onSubmitClick}
+                    onClick={this.onLogin}
                     >
                     Login
                   </button>
-                  {this.onErrorLogin()}
-                  {this.props.afterTwoSeconds()}
-      
                   <p className="lead">
                     Don't have account ? <Link to="/register">Sign Up!</Link>
                   </p>
@@ -99,4 +77,4 @@ const mapStateToProps = state => {
     return {error : state.auth.error, empty: state.auth.empty,  user:state.auth}
 }
 
-export default connect(mapStateToProps,{onLoginClick,afterTwoSeconds})(Login)
+export default connect(mapStateToProps,{login})(Login)
