@@ -152,13 +152,16 @@ export const keepLogin = (username, id, role) => {
   };
 };
 
-export const onEdit = (id,firstname, lastname, username,birthday,address,email) => {
+export const onEdit = (id,firstname, lastname, username,birthday,address,email,phone_number) => {
   return async dispatch => {
     try {
-      const res = await axios.patch(`http://localhost:2000/users/${id}`, {
-        firstname, lastname, username,birthday,address,email
+      const res = await axios.patch(`/users/${id}`, {
+        firstname, lastname, username,birthday,address,email,phone_number
       });
-      console.log(res.data[0].id);
+      swal({
+        text:"Edit Profile Success",
+        icon:"success"
+      })
       
       cookie.set("stillLogin", res.data[0].username, { path: "/" });
       dispatch({
@@ -175,22 +178,4 @@ export const onEdit = (id,firstname, lastname, username,birthday,address,email) 
   };
 };
 
-// export const addProduct = (name, desc, price, pict) => {
-//   return dispatch => {
-//     axios
-//       .post("/product", {
-//         name: name,
-//         desc: desc,
-//         price: price,
-//         pict: pict
-//       })
-//       .then(res => {
-//         console.log("berhasil menambahkan");
-//         const { name, desc, price, pict } = res.data[0];
-//         dispatch({
-//           type: "ADD_SUCCESS",
-//           payload: { name, desc, price, pict }
-//         });
-//       });
-//   };
-// };
+

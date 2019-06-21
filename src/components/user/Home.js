@@ -5,7 +5,6 @@ import Slider from 'react-slick';
 import swal from '@sweetalert/with-react';
 import moment from 'moment'
 
-import 'react-datepicker/dist/react-datepicker.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -22,15 +21,9 @@ class Home extends Component {
         price: 0,
         additional: false,
         food:0,
-        carrier:0
+        carrier:0,
+        quantity: 1
     };
-
-    // handleChange(date) {
-    //     this.setState({
-    //       startDate: date
-    //     });
-    //   }
-
     componentDidMount() {
         this.getImage();
         this.getImageTransport();
@@ -239,8 +232,6 @@ class Home extends Component {
         };
         if (this.state.transport !== undefined) {
             var d = new Date()
-            
-
             return (
                 <div>
                     <div>
@@ -314,7 +305,7 @@ class Home extends Component {
                                                     {this.renderCity()}
                                                 </datalist>
                                                 <div className="row">
-                                                    <div className="col-5">
+                                                    <div className="col-4">
                                                         <label className="mt-4" for="sell">Jenis Hewan</label>
                                                         <select className="form-control" id="sell" ref={input => { this.pet = input }} defaultValue="">
                                                             <option value="" disabled>Pilih jenis hewan</option>
@@ -333,6 +324,22 @@ class Home extends Component {
                                                             <option value="3">Besar</option>
                                                         </select>
                                                     </div>
+                                                </div>
+                                                <div className="row">
+                                                <label className="mt-2 mx-auto"> Jumlah Hewan</label>
+                                                <div className="input-group mt-2 px-2">
+                                                    <span className="input-group-btn">
+                                                        <button className="btn btn-danger btn-number" onClick={() => {this.setState({quantity : this.state.quantity + 1})}}>
+                                                        <i className="fas fa-minus"></i>
+                                                        </button>
+                                                    </span>
+                                                    <input type="number" className="form-control input-number" value={this.state.quantity} min="1" ref={input =>{this.quantity = input}}/>
+                                                    <span className="input-group-btn">
+                                                        <button className="btn btn-warning btn-number" onClick={() => {this.setState({quantity : this.state.quantity + 1})}}>
+                                                        <i className="fas fa-plus"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
                                                 </div>
                                                 <label className="mt-4 ">
                                                 Pilih Tambahan
@@ -354,8 +361,12 @@ class Home extends Component {
                                         <div className="row pt-3">
                                             <div className="col">
                                             </div>
-                                            <div className="col-auto">
-                                                <button className="btn btn-warning" onClick={this.booking}>BOOK</button>
+                                            <div className="col-auto d-flex flex-column">
+                                                <p>Mau langsung booking? tambah orderan lagi juga bisa!</p>
+                                                <div className="d-flex justify-content-end">
+                                                <button className="btn btn-warning mx-1" onClick={this.booking}> Langsung Booking </button>
+                                                <button className="btn btn-warning mx-1"> Tambah Order </button>
+                                                </div>
                                             </div>
 
                                         </div>
